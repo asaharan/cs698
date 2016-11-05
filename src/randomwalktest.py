@@ -1,4 +1,6 @@
 import graph as G
 import randomWalk as r
-g = G.readGraph("../data/smallGraph.data")
-walk = r.RandomWalk(g,nodes=10)
+filename = "../data/10000x320000.data"
+nodes = 100
+g = G.readGraph(filename)
+w = r.RandomWalk(g,nodes=nodes)
