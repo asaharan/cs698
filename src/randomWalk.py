@@ -16,20 +16,23 @@ class RandomWalk:
 		self.currentNode = self.startNode
 		while True:
 			if len(self.nodesSample) == self.nodes:
-				print 'processing done'
-				print self.sampleGraph
+				#print 'processing done'
+				#print self.sampleGraph
 				break
 			self.step()
-
+	
+	def getGraph(self):
+		return self.sampleGraph
+	
 	def step(self):
 		#self.currentNode = self.startNode
-		print self.currentNode
-		print self.nodesSample
+		#print self.currentNode
+		#print self.nodesSample
 		self.neighbours=G.getNeighbours(self.graph, self.currentNode)
 		self.chooseRandomNeighbour()
 
 	def chooseRandomNeighbour(self):
-		weights=[0]*len(self.neighbours)
+		weights=[0.0]*len(self.neighbours)
 		sumv = 0
 		n = len(self.neighbours)
 		for i in range(n):
@@ -37,27 +40,43 @@ class RandomWalk:
 			weights[i]=G.getEdgeWeight(self.graph, self.currentNode, toNode)
 			sumv+=weights[i]
 
+		#print weights
 		r = random.uniform(0,1)
 		for i in range(n):
-			weights[i]/=sumv
+			#print weights[i],'/',sumv,'='
+			weights[i]/=sumv*1.0
+			#print weights[i],' sa'
 		s = 0
+		stra = ''
+		called = False
 		for i in range(n):
 			s+=weights[i]
+			stra += str(r)+','+str(s)+','+str(weights[i])+';'
 			if r < s :
+				called = True
 				self.cross(self.currentNode, self.neighbours[i], weights[i]*sumv)
 				break
+		if called:
+			#print "called"
+			pass
+		else:
+			#now we need to update start or retry start
+			self.updateStartAndCurrent()
+			#print "not called",stra
+	def updateStartAndCurrent(self):
+		self.startNode = random.choice(self.nodesOriginal)
+		self.currentNode = self.startNode
 
 	def cross(self,src,dest, weight):
 		self.currentNode = dest
 		self.nodesSample.add(dest)
 		self.nodesSample.add(src)
 		if not G.addEdge(self.sampleGraph, src, dest, weight ):
-			print 'not G.addEdge'
-			self.startNode = random.choice(self.nodesOriginal)
-		
-	def sampleRW(graph, nodes=1000):
-		sampleGraph = {}
-		nodesOriginal = G.getNodes(graph)
-		edgesOriginal = G.getEdges(graph, weight = False)
-		nodesSample = set()
-		startNode = random.choice(nodesOriginal)
+			#print 'not G.addEdge'
+			self.updateStartAndCurrent()
+			#self.startNode = random.choice(self.nodesOriginal)
+			#self.currentNode = startNode
+		else:
+			#print src, dest,"added to G"
+			#print self.sampleGraph
+			pass
