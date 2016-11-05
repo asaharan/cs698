@@ -54,8 +54,11 @@ def getEdges(graph, weight=True):
 def saveToFile(graph, path):
 	fp = open(path, 'w')
 	for src in graph.keys():
-		for dest, weight in graph[src]:
-			fp.write(str(src) + " " + str(dest) + " " + str(weight) + "\n")
+		if len(graph[src]) > 0:
+			for dest, weight in graph[src]:
+				fp.write(str(src) + " " + str(dest) + " " + str(weight) + "\n")
+		else:
+			fp.write(str(src) + "\n")
 	fp.close()
 
 def generateGraph(nodes=100, edges=300, weights=50, path=None):
@@ -78,11 +81,14 @@ def readGraph(path):
 	for line in fp.readlines():
 		data = line.split()
 		start = int(data[0])
-		dest = int(data[1])
-		weight = int(data[2])
-		if start in graph.keys():
-			graph[start].append((dest, weight))
+		if len(data) > 1:
+			dest = int(data[1])
+			weight = int(data[2])
+			if start in graph.keys():
+				graph[start].append((dest, weight))
+			else:
+				graph[start] = [(dest, weight)]
 		else:
-			graph[start] = [(dest, weight)]
+			graph[start] = []
 	fp.close()
 	return graph
