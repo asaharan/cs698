@@ -1,5 +1,6 @@
 from collections import defaultdict
 import graph as G
+import sys
 
 #	for doing DFS both times while computing SCC
 def dfs(graph, start, visited, stack=None, scc=None):
@@ -37,6 +38,7 @@ def wccDist(graph):
 
 #	Strongly Connected Component distribution
 def sccDist(graph):
+	sys.setrecursionlimit(5000)
 	transpose = G.computeTranspose(graph)
 	nodes = G.getNodes(graph)
 	visited = [False]*(sorted(nodes)[-1] + 1)
