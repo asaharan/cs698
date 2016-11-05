@@ -4,9 +4,10 @@ import itertools
 
 class RandomWalk:
 	
-	def __init__(self,graph, nodes=1000, minP=0.0):
+	def __init__(self,graph, nodes=1000, minP=0.0,weights=True):
 		self.sampleGraph = {}
 		self.graph = graph
+		self.weights=weights
 		self.nodesOriginal = G.getNodes(self.graph)
 		self.edgesOriginal = G.getEdges(self.graph, weight = True)
 		self.nodes = min(nodes, len(self.nodesOriginal))
@@ -19,7 +20,9 @@ class RandomWalk:
 				#print 'processing done'
 				#print self.sampleGraph
 				break
-			self.step()
+			self.neighbours=G.getNeighbours(self.graph, self.currentNode)
+			self.chooseRandomNeighbour()
+			#self.step()
 	
 	def getGraph(self):
 		return self.sampleGraph
@@ -33,12 +36,16 @@ class RandomWalk:
 
 	def chooseRandomNeighbour(self):
 		weights=[0.0]*len(self.neighbours)
+		if self.weights == False:
+			weights=[1.0]*len(self.neighbours)
+			pass	
 		sumv = 0
 		n = len(self.neighbours)
-		for i in range(n):
-			toNode = self.neighbours[i]
-			weights[i]=G.getEdgeWeight(self.graph, self.currentNode, toNode)
-			sumv+=weights[i]
+		if self.weights == True:
+			for i in range(n):
+				toNode = self.neighbours[i]
+				weights[i]=G.getEdgeWeight(self.graph, self.currentNode, toNode)
+				sumv+=weights[i]
 
 		#print weights
 		r = random.uniform(0,1)
@@ -63,6 +70,7 @@ class RandomWalk:
 			#now we need to update start or retry start
 			self.updateStartAndCurrent()
 			#print "not called",stra
+
 	def updateStartAndCurrent(self):
 		self.startNode = random.choice(self.nodesOriginal)
 		self.currentNode = self.startNode
