@@ -14,3 +14,12 @@ def degreeDist(graph):
 		inDist[inDict[node]] += 1
 		outDist[outDict[node]] += 1
 	return inDist, outDist
+
+#	Weakly Connected Component distribution
+def wccDist(graph):
+	tempGraph = graph.copy()
+	dist = defaultdict(int)
+	while tempGraph:
+		size = G.getWccSize(tempGraph)
+		dist[size] += 1
+	return dist
