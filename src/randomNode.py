@@ -11,7 +11,6 @@ def sampleRN(graph, nodes=1000):
 	while(len(nodesSample) < size):
 		nodesSample.add(random.choice(nodesOriginal))
 	nodesSample = list(nodesSample)
-	edges = 0
 	for pair in itertools.product(nodesSample, repeat=2):
 		edge = (pair[0], pair[1])
 		if edge in edgesOriginal:
