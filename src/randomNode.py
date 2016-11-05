@@ -16,4 +16,8 @@ def sampleRN(graph, nodes=1000):
 			for dest, weight in graph[src]:
 				if dest in nodesSample:
 					G.addEdge(sampleGraph, src, dest, weight)
+	currentNodes = G.getNodes(sampleGraph)
+	for node in nodesSample:
+		if node not in currentNodes:
+			sampleGraph[node] = []
 	return sampleGraph
