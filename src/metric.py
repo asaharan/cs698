@@ -38,6 +38,7 @@ def wccDist(graph):
 
 #	Strongly Connected Component distribution
 def sccDist(graph):
+	sys.setrecursionlimit(5000)
 	transpose = G.computeTranspose(graph)
 	nodes = G.getNodes(graph)
 	visited = [False]*(sorted(nodes)[-1] + 1)
