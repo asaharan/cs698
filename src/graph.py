@@ -120,3 +120,12 @@ def getWccSize(graph, start=None):
 				wccNodes.add(src)
 		removeNode(graph, node)
 	return len(wccNodes)
+
+#	computes transpose of graph
+#	excludes isolated nodes
+def computeTranspose(graph):
+	trans = {}
+	for src in graph.keys():
+		for dest, weight in graph[src]:
+			addEdge(trans, dest, src, weight)
+	return trans
