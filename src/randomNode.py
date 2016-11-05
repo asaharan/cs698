@@ -11,8 +11,9 @@ def sampleRN(graph, nodes=1000):
 	while(len(nodesSample) < size):
 		nodesSample.add(random.choice(nodesOriginal))
 	nodesSample = list(nodesSample)
-	for pair in itertools.product(nodesSample, repeat=2):
-		edge = (pair[0], pair[1])
-		if edge in edgesOriginal:
-			G.addEdge(sampleGraph, pair[0], pair[1], G.getEdgeWeight(graph, pair[0], pair[1]))
+	for src in nodesSample:
+		if src in graph.keys():
+			for dest, weight in graph[src]:
+				if dest in nodesSample:
+					G.addEdge(sampleGraph, src, dest, weight)
 	return sampleGraph

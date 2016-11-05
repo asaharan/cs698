@@ -1,7 +1,10 @@
 import random
 
 def getNeighbours(graph, src):
-	return [dest for dest, weight in graph[src]]
+	if src not in graph.keys():
+		return []
+	else:
+		return [dest for dest, weight in graph[src]]
 
 def isNeighbour(graph, src, dest):
 	if dest in getNeighbours(graph, src):
