@@ -61,7 +61,7 @@ def saveToFile(graph, path):
 			fp.write(str(src) + "\n")
 	fp.close()
 
-def generateGraph(nodes=100, edges=300, weights=50, path=None):
+def generateGraph(nodes=100, edges=300, weights=50,isoNodes=0, path=None):
 	graph = {}
 	i = 0
 	while i < edges:
@@ -70,6 +70,9 @@ def generateGraph(nodes=100, edges=300, weights=50, path=None):
 		weight = random.randint(1, weights)
 		if addEdge(graph, src, dest, weight):
 			i += 1
+	while isoNodes > 0:
+		graph[nodes+isoNodes] = []
+		isoNodes -= 1
 	if path:
 		saveToFile(graph, path)
 	return graph
