@@ -31,6 +31,13 @@ def addEdge(graph, src, dest, weight):
 		graph[src] = [(dest, weight)]
 	return flag
 
+def removeNode(graph, node):
+	graph.pop(node, None)
+	for src in graph.keys():
+		for dest, weight in graph[src]:
+			if dest == node:
+				graph[src].remove((dest, weight))
+
 def getNodes(graph):
 	nodes = set()
 	for src in graph.keys():
@@ -61,7 +68,7 @@ def saveToFile(graph, path):
 			fp.write(str(src) + "\n")
 	fp.close()
 
-def generateGraph(nodes=100, edges=300, weights=50, path=None):
+def generateGraph(nodes=100, edges=300, weights=50,isoNodes=0, path=None):
 	graph = {}
 	i = 0
 	while i < edges:
@@ -70,6 +77,9 @@ def generateGraph(nodes=100, edges=300, weights=50, path=None):
 		weight = random.randint(1, weights)
 		if addEdge(graph, src, dest, weight):
 			i += 1
+	while isoNodes > 0:
+		graph[nodes+isoNodes] = []
+		isoNodes -= 1
 	if path:
 		saveToFile(graph, path)
 	return graph
@@ -92,3 +102,21 @@ def readGraph(path):
 			graph[start] = []
 	fp.close()
 	return graph
+
+####NOTE: Removes the WCC from graph
+def getWccSize(graph, start=None):
+	if start == None:
+		start = random.choice(graph.keys())
+	wccNodes = set([start])
+	process = set([start])
+	while bool(process):
+		node = process.pop()
+		for src, dest in getEdges(graph, weight=False):
+			if src == node:	#checking for self edge
+				process.add(dest)
+				wccNodes.add(dest)
+			if dest == node:
+				process.add(src)
+				wccNodes.add(src)
+		removeNode(graph, node)
+	return len(wccNodes)
