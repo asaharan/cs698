@@ -1,6 +1,17 @@
 from collections import defaultdict
 import graph as G
 
+#	for doing DFS both times while computing SCC
+def dfs(graph, start, visited, stack=None, scc=None):
+	visited[start] = True
+	for neighbour in G.getNeighbours(graph, start):
+		if not visited[neighbour]:
+			dfs(graph, neighbour, visited, stack, scc)
+			if scc != None:
+				scc.add(neighbour)
+	if stack != None:
+		stack.append(start)
+
 #	In and Out Degree distribution
 def degreeDist(graph):
 	inDict = defaultdict(int)
@@ -22,4 +33,26 @@ def wccDist(graph):
 	while tempGraph:
 		size = G.getWccSize(tempGraph)
 		dist[size] += 1
+	return dist
+
+#	Strongly Connected Component distribution
+def sccDist(graph):
+	transpose = G.computeTranspose(graph)
+	nodes = G.getNodes(graph)
+	visited = [False]*(sorted(nodes)[-1] + 1)
+	st = []
+	dist = defaultdict(int)
+	for node in nodes:
+		if not visited[node]:
+			dfs(graph, node, visited, stack=st)
+	visited = [False]*(sorted(nodes)[-1] + 1)
+	while len(st) > 0:
+		node = st.pop()
+		newScc = set([node])
+		dfs(transpose, node, visited, scc=newScc)
+		dist[len(newScc)] += 1
+		while len(newScc) > 0:
+			val = newScc.pop()
+			if val != node:
+				st.remove(val)
 	return dist
