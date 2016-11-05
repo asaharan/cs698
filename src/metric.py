@@ -3,14 +3,24 @@ import graph as G
 
 #	In and Out Degree distribution
 def degreeDist(graph, sample):
-	originalDistIn = defaultdict(int)
-	originalDistOut = defaultdict(int)
-	sampleDistIn = defaultdict(int)
-	sampleDistOut = defaultdict(int)
+	originalDictIn = defaultdict(int)
+	originalDictOut = defaultdict(int)
+	sampleDictIn = defaultdict(int)
+	sampleDictOut = defaultdict(int)
 	for src, dest in G.getEdges(graph, weight=False):
-		originalDistIn[dest] += 1
-		originalDistOut[src] += 1
+		originalDictIn[dest] += 1
+		originalDictOut[src] += 1
 	for src, dest in G.getEdges(sample, weight=False):
-		sampleDistIn[dest] += 1
-		sampleDistOut[src] += 1
-	return originalDistIn, originalDistOut, sampleDistIn, sampleDistOut
+		sampleDictIn[dest] += 1
+		sampleDictOut[src] += 1
+	originalIn = defaultdict(int)
+	originalOut = defaultdict(int)
+	sampleIn = defaultdict(int)
+	sampleOut = defaultdict(int)
+	for node in G.getNodes(graph):
+		originalIn[originalDictIn[node]] += 1
+		originalOut[originalDictOut[node]] += 1
+	for node in G.getNodes(sample):
+		sampleIn[sampleDictIn[node]] += 1
+		sampleOut[sampleDictOut[node]] += 1
+	return originalIn, originalOut, sampleIn, sampleOut
