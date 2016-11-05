@@ -68,12 +68,20 @@ class RandomWalk:
 			pass
 		else:
 			#now we need to update start or retry start
-			self.updateStartAndCurrent()
+			#self.updateStartAndCurrent()
+			self.tryToRestart()
 			#print "not called",stra
+			pass
 
 	def updateStartAndCurrent(self):
 		self.startNode = random.choice(self.nodesOriginal)
 		self.currentNode = self.startNode
+
+	def tryToRestart(self):
+		if random.uniform(0,1.0) > self.minP:
+			self.updateStartAndCurrent()
+		else:
+			self.currentNode = self.startNode
 
 	def cross(self,src,dest, weight):
 		self.currentNode = dest
