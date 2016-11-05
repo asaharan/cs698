@@ -17,6 +17,37 @@ def getEdgeWeight(graph, src, dest):
 			if nei == dest:
 				return wt
 
+def addEdge(graph, src, dest, weight):
+	flag = True
+	if src in graph.keys():
+		if not isNeighbour(graph, src, dest):
+			graph[src].append((dest, weight))
+		else:
+			flag = False
+	else:
+		graph[src] = [(dest, weight)]
+	return flag
+
+def getNodes(graph):
+	nodes = set()
+	for src in graph.keys():
+		nodes.add(src)
+		for neighbour in getNeighbours(graph, src):
+			nodes.add(neighbour)
+	return list(nodes)
+
+def getEdges(graph, weight=True):
+	edges = set()
+	if weight:
+		for src in graph.keys():
+			for dest, wt in graph[src]:
+				edges.add((src, dest, wt))
+	else:
+		for src in graph.keys():
+			for dest, wt in graph[src]:
+				edges.add((src, dest))
+	return list(edges)
+
 def generateGraph(nodes=100, edges=300, weights=50, path=None):
 	graph = {}
 	i = 0
