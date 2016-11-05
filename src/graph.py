@@ -48,6 +48,13 @@ def getEdges(graph, weight=True):
 				edges.add((src, dest))
 	return list(edges)
 
+def saveToFile(graph, path):
+	fp = open(path, 'w')
+	for src in graph.keys():
+		for dest, weight in graph[src]:
+			fp.write(str(src) + " " + str(dest) + " " + str(weight) + "\n")
+	fp.close()
+
 def generateGraph(nodes=100, edges=300, weights=50, path=None):
 	graph = {}
 	i = 0
@@ -55,19 +62,10 @@ def generateGraph(nodes=100, edges=300, weights=50, path=None):
 		src = random.randint(1, nodes)
 		dest = random.randint(1, nodes)
 		weight = random.randint(1, weights)
-		if src in graph.keys():
-			if not isNeighbour(graph, src, dest):
-				graph[src].append((dest, weight))
-				i += 1
-		else:
-			graph[src] = [(dest, weight)]
+		if addEdge(graph, src, dest, weight):
 			i += 1
 	if path:
-		fp = open(path, 'w')
-		for src in graph.keys():
-			for dest, weight in graph[src]:
-				fp.write(str(src) + " " + str(dest) + " " + str(weight) + "\n")
-		fp.close()
+		saveToFile(graph, path)
 	return graph
 
 
