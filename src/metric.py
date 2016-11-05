@@ -58,3 +58,23 @@ def sccDist(graph):
 			if val != node:
 				st.remove(val)
 	return dist
+
+#	Hop-plot distribution
+def hopDist(graph):
+	nodes = G.getNodes(graph)
+	size = sorted(nodes)[-1] + 1
+	dist = [[sys.maxint]*size for i in xrange(size)]
+	for src, dest, weight in G.getEdges(graph):
+		dist[src][dest] = weight
+	for node in nodes:
+		dist[node][node] = 0
+	for k in range(1, size):
+		for i in range(1, size):
+			for j in range(1, size):
+				dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+	hop = defaultdict(int)
+	for i in range(1, size):
+		for j in range(1, size):
+				hop[dist[i][j]] += 1
+	hop.pop(sys.maxint, None)
+	return hop
