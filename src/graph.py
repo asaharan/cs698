@@ -38,6 +38,13 @@ def removeNode(graph, node):
 			if dest == node:
 				graph[src].remove((dest, weight))
 
+def removeEdge(graph, src, dest):
+	for destination, weight in graph[src]:
+		if destination == dest:
+			graph[src].remove((dest, weight))
+			return True
+	return False
+
 def getNodes(graph):
 	nodes = set()
 	for src in graph.keys():
