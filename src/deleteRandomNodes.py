@@ -11,12 +11,13 @@ def deleteRandomNodes(graph, resizeRatio=0.7):
 			break
 		sampleNodeCount -= 1
 		randomNode=random.choice(sampleNodes)
+		sampleNodes.remove(randomNode)
 		G.removeNode(sampleGraph, randomNode)
 	return sampleGraph
 
 if __name__=="__main__":
 	print "fetching data"
 	data = G.readGraph("../data/5000x25000.data")
-	print "running deletionOfRandomNode"
-	sample = deletionOfRandomNode(data, resizeRatio=0.7)
+	print "running deleteRandomNodes"
+	sample = deleteRandomNodes(data, resizeRatio=0.7)
 	print "variables available globally: data, sample"
