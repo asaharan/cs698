@@ -6,7 +6,7 @@ def deleteRandomNodes(graph, resizeRatio=0.7):
 	sampleGraph = graph.copy()
 	nodes = sampleNodeCount
 	while True:
-		print sampleNodeCount, nodes
+		#print sampleNodeCount, nodes
 		if 1.0*sampleNodeCount/nodes <= resizeRatio:
 			break
 		sampleNodeCount -= 1
