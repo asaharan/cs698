@@ -88,12 +88,15 @@ def clustCoff(graph):
 	for node in nodes:
 		neighbors = G.getNeighbours(graph, node)
 		n_neighbors = len(neighbors)
-		if not clustDist[n_neighbors]:
+		if n_neighbors not in clustDist.keys():
 			clustDist[n_neighbors] = set()
 		total = 0
 		for neighbor in neighbors:
 			for neighborPair in neighbors:
 				if G.isNeighbour(graph, neighbor, neighborPair):
 					total += 1
-		clustDist[n_neighbors] += total/(n_neighbors * (n_neighbors-1) * 1.0)
+		if n_neighbors == 0 or n_neighbors == 1:
+			clustDist[n_neighbors].add(1)
+		else:
+			clustDist[n_neighbors].add(total/(n_neighbors * (n_neighbors-1) * 1.0))
 	return clustDist
