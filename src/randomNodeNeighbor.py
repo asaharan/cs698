@@ -17,6 +17,6 @@ if __name__ == "__main__":
 	print "fetching data"
 	data = G.readGraph("../data/5000x25000.data")
 	print "running randomNodeNeighbor"
-	sample = randomNodeNeighbor(data)
+	sample = randomNodeNeighbor(data,nodes=2000)
 	print "vars: data, sample "
 
