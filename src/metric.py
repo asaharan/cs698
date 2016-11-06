@@ -1,7 +1,6 @@
 from collections import defaultdict
 import graph as G
 import sys
-
 #	for doing DFS both times while computing SCC
 def dfs(graph, start, visited, stack=None, scc=None):
 	visited[start] = True
@@ -81,3 +80,20 @@ def hopDist(graph):
 				hop[dist[i][j]] += 1
 	hop.pop(sys.maxint, None)
 	return hop
+
+#	Clustering Coefficient Distribution
+def clustCoff(graph):
+	nodes = sorted(G.getNodes(graph))
+	clustDist = dict()
+	for node in nodes:
+		neighbors = G.getNeighbours(graph, node)
+		n_neighbors = len(neighbors)
+		if not clustDist[n_neighbors]:
+			clustDist[n_neighbors] = set()
+		total = 0
+		for neighbor in neighbors:
+			for neighborPair in neighbors:
+				if G.isNeighbour(graph, neighbor, neighborPair):
+					total += 1
+		clustDist[n_neighbors] += total/(n_neighbors * (n_neighbors-1) * 1.0)
+	return clustDist
