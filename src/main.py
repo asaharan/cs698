@@ -17,7 +17,6 @@ fscc = open("../out-final/sccDist.out", "w")
 fhop = open("../out-final/hopDist.out", "w")
 fclust = open("../out-final/clustDist.out", "w")
 
-
 print "Reading graph..."
 graph = G.readGraph(path)
 print "Generating samples..."
