@@ -1,0 +1,8 @@
+{'random edge': {0: set([1]), 1: set([1])}}
+
+{'random node': {0: set([1]), 1: set([1]), 2: set([0.0])}}
+
+{'random node neighbour': {0: set([1]), 24: set([0.0]), 34: set([0.0]), 35: set([0.0]), 21: set([0.0])}}
+
+{'random walk': {0: set([1]), 1: set([1]), 2: set([0.0])}}
+

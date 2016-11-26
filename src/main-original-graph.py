@@ -8,28 +8,28 @@ import json
 
 path = "../data/smallGraph.data"
 #path = "../data/smallGraph.data"
-numNodes = 100
+numNodes = 1000
 
-fid = open("../out-final/inDegreeDist.out", "w")
-fod = open("../out-final/outDegreeDist.out", "w")
-fwcc = open("../out-final/wccDist.out", "w")
-fscc = open("../out-final/sccDist.out", "w")
-fhop = open("../out-final/hopDist.out", "w")
-fclust = open("../out-final/clustDist.out", "w")
+fid = open("../out-final/inDegreeDist-original-graph.out", "w")
+fod = open("../out-final/outDegreeDist-original-graph.out", "w")
+fwcc = open("../out-final/wccDist-original-graph.out", "w")
+fscc = open("../out-final/sccDist-original-graph.out", "w")
+fhop = open("../out-final/hopDist-original-graph.out", "w")
+fclust = open("../out-final/clustDist-original-graph.out", "w")
 
 
 print "Reading graph..."
 graph = G.readGraph(path)
-print "Generating samples..."
-print "\t* using random edge"
-sampleRE = RE.randomEdge(graph, nodes=numNodes)
-print "\t* using random node"
-sampleRN = RN.sampleRN(graph, nodes=numNodes)
-print "\t* using random node neighbour"
-sampleRNN = RNN.randomNodeNeighbor(graph, nodes=numNodes)
-print "\t* using random walk"
-rw = RW.RandomWalk(graph, nodes=numNodes)
-sampleRW = rw.getGraph()
+# print "Generating samples..."
+# print "\t* using random edge"
+# sampleRE = RE.randomEdge(graph, nodes=numNodes)
+# print "\t* using random node"
+# sampleRN = RN.sampleRN(graph, nodes=numNodes)
+# print "\t* using random node neighbour"
+# sampleRNN = RNN.randomNodeNeighbor(graph, nodes=numNodes)
+# print "\t* using random walk"
+# rw = RW.RandomWalk(graph, nodes=numNodes)
+# sampleRW = rw.getGraph()
 
 def getAlgo(num):
 	if num == 1:
@@ -42,7 +42,7 @@ def getAlgo(num):
 		return "random walk"
 
 print "Computing metrics..."
-for sample, num in zip([sampleRE, sampleRN, sampleRNN, sampleRW],range(1,5)):
+for sample, num in zip([graph],range(1,5)):
 	algo = getAlgo(num)
 	ans = {}
 	print "\t* In and Out degree distribution for " + algo

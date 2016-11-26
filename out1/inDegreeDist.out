@@ -1,0 +1,8 @@
+{'random edge': defaultdict(<type 'int'>, {0: 50, 1: 50})}
+
+{'random node': defaultdict(<type 'int'>, {0: 71, 1: 23, 2: 6})}
+
+{'random node neighbour': defaultdict(<type 'int'>, {0: 4, 1: 114})}
+
+{'random walk': defaultdict(<type 'int'>, {0: 1, 1: 98, 2: 1})}
+

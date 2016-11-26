@@ -4,18 +4,17 @@ import randomEdge as RE
 import randomNode as RN
 import randomNodeNeighbor as RNN
 import randomWalk as RW
-import json
 
-path = "../data/smallGraph.data"
+path = "../data/10000x320000.data"
 #path = "../data/smallGraph.data"
-numNodes = 100
-
-fid = open("../out-final/inDegreeDist.out", "w")
-fod = open("../out-final/outDegreeDist.out", "w")
-fwcc = open("../out-final/wccDist.out", "w")
-fscc = open("../out-final/sccDist.out", "w")
-fhop = open("../out-final/hopDist.out", "w")
-fclust = open("../out-final/clustDist.out", "w")
+numNodes = 4000
+#out4 for 4000 nodes
+fid = open("../out4/inDegreeDist.out", "w")
+fod = open("../out4/outDegreeDist.out", "w")
+fwcc = open("../out4/wccDist.out", "w")
+fscc = open("../out4/sccDist.out", "w")
+fhop = open("../out4/hopDist.out", "w")
+fclust = open("../out4/clustDist.out", "w")
 
 
 print "Reading graph..."
@@ -48,18 +47,18 @@ for sample, num in zip([sampleRE, sampleRN, sampleRNN, sampleRW],range(1,5)):
 	print "\t* In and Out degree distribution for " + algo
 	dd = M.degreeDist(sample)
 	ans[algo] = dd[0]
-	fid.write(json.dumps(ans) + "\n\n")
+	fid.write(str(ans) + "\n\n")
 	ans[algo] = dd[1]
-	fod.write(json.dumps(ans) + "\n\n")
+	fod.write(str(ans) + "\n\n")
 	print "\t* WCC distribution for " + algo
 	ans[algo] = M.wccDist(sample)
-	fwcc.write(json.dumps(ans) + "\n\n")
+	fwcc.write(str(ans) + "\n\n")
 	print "\t* SCC distribution for " + algo
 	ans[algo] = M.sccDist(sample)
-	fscc.write(json.dumps(ans) + "\n\n")
+	fscc.write(str(ans) + "\n\n")
 	print "\t* Hop distribution for " + algo
 	ans[algo] = M.hopDist(sample)
-	fhop.write(json.dumps(ans) + "\n\n")
+	fhop.write(str(ans) + "\n\n")
 	print "\t* Clustering coefficient distribution for " + algo
 	ans[algo] = M.clustCoff(sample)
 	fclust.write(str(ans) + "\n\n")
