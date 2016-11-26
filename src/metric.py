@@ -100,3 +100,31 @@ def clustCoff(graph):
 		else:
 			clustDist[n_neighbors].add(total/(n_neighbors * (n_neighbors-1) * 1.0))
 	return clustDist
+
+#average in and out weight distribution
+def weightDist(graph):
+	inDict = defaultdict(int)
+	outDict = defaultdict(int)
+	inWeightDict = defaultdict(int)
+	outWeightDict = defaultdict(int)
+	inAvgWeightDict = defaultdict(int) #should use float
+	outAvgWeightDict = defaultdict(int) #should use float
+	for src, dest, weight in G.getEdges(graph, weight=True):
+		inDict[dest] += 1
+		inWeightDict[dest] += weight
+		outDict[src] += 1
+		outDict[src] += weight
+	inDist = defaultdict(int)
+	outDist = defaultdict(int)
+	#calculating average now
+	for node in inDict:
+		inAvgWeightDict[node] = inWeightDict[node]/inDict[node]
+	
+	for node in outDict:
+		outAvgWeightDict[node] = outWeightDict[node]/outDict[node]
+
+	for node in G.getNodes(graph):
+		inDist[inAvgWeightDict[node]] += 1
+		outDist[outAvgWeightDict[node]] += 1
+	return inDist, outDist
+
